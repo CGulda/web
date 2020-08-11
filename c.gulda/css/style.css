@@ -1,0 +1,35 @@
+body {
+  background-color: black;
+  color:lightgrey;
+  margin:0;
+}
+
+.Headline {
+  font-family: 'Major Mono Display', monospace;
+  text-align: center;
+  margin: 10% 0 5% 0;
+  font-size: 3em;
+}
+
+.select {
+  display:block;
+  text-align: center;
+  margin:auto;
+}
+.select > * {
+  display: inline-block;
+  margin:0 3% 0 3% ;
+  max-width: 8%;
+  max-height: 8%;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.cloud {
+  position: fixed;
+  left:53%;
+  top:100px;
+  max-width: 15%;
+  max-height: 15%;
+  opacity:0.5;
+}
