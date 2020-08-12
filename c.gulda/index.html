@@ -1,21 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/style.css">
-    <title>CGulda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA" rel="icon" type="image/x-icon" />
-  </head>
-  <body>
-    <image class="cloud" src="https://i.pinimg.com/originals/19/8d/ae/198daeda14097d45e417e62ff283f10e.png"></image>
-    <div class="Headline">
-      <h1>AREAS</h1>
-    </div>
-    <div class="select">
-      <image style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></image>
-      <image src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></image>
-      <image style="background-color: #F2C80F;" src="https://lh3.googleusercontent.com/proxy/poBX4qfDMteBGtTpybvHq45EIRnPwgVARf7BcSGXIO-ocFJCVc3yMIt77bDl7tPwLtUKusiVWNEerxnmv0umH5XLsShWId1wmH5sudelS1qiFyh8Z8sP6H5fGwEsQRbh-PXDdQrmFe9MjLmmGg_1_w2YEgyCVnNWJKUWHWE"></image>
-    </div>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/style.css">
+        <title>CGulda</title>
+        <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+        <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA" rel="icon" type="image/x-icon"/>
+        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.nav-icon').click(function() {
+                    $(".nav-icon, .nav").toggleClass('open');
+                });
+
+                $('button').click(function() {
+                    $(".nav-icon, .nav").toggleClass('open');
+                    //$("main").hide();
+                    $("." + $(this).html()).show();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav">
+
+        </div>
+        <image class="cloud" src="https://i.pinimg.com/originals/19/8d/ae/198daeda14097d45e417e62ff283f10e.png"></image>
+        <div class="Headline">
+            <h1>AREAS</h1>
+        </div>
+        <div class="select">
+            <image style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></image>
+            <image src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></image>
+            <image style="background-color: #F2C80F;" src="https://lh3.googleusercontent.com/proxy/bTmnOCkwytPitru7KKDWwH5irWXg1LiBSMuJz5Xxk8443xiQEAdTs6FN03j8xO6eQI5reNivyOexrMOnGi2kEtr79XXzhhf-ZNI7WCZ9l0Rv1SF3Cyjl"></image>
+        </div>
+        <div id="pbi" class="panel">
+          content
+        </div>
+    </body>
 </html>
