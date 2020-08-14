@@ -1,257 +1,262 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Mesh - by CGulda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <link
+    href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA"
+    rel="icon" type="image/x-icon" />
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script>
+    var settingslist = ["dot-size", "dot-number", "dot-range", "dot-timeout",
+      "dot-color", "dot-colrange", "dot-colintens", "dot-speed", "dot-center", "dot-symetry", "dot-constant", "dot-seed"
+    ];
+    var settings = [1, 150, 75, 70, 90, 15, 100, 1];
+    let presets = [
+      [1, 116, 171, 11, 0, 360, 50, 20],
+      [1, 150, 75, 70, 90, 15, 100, 1],
+      [1, 9, 213, 2, 98, 0, 56, 20],
+      [7, 50, 100, 75, 82, 100, 50, 2],
+      [8, 100, 125, 2, 0, 360, 90, 0],
+      [6, 258, 41, 54, 318, 236, 78, 18],
+      [3, 164, 75, 3, 216, 139, 55, 8],
+      [1, 123, 123, 14, 284, 164, 55, 11]
+    ];
 
-    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-    <link rel="stylesheet" href="http://c.gulda.pl/css/core.css">
-    <link rel="stylesheet" href="http://c.gulda.pl/css/elements.css">
-    <link rel="stylesheet" href="http://c.gulda.pl/css/hammenu.css">
-    <link rel="stylesheet" href="http://c.gulda.pl/css/efects.css">
-    <!--
-    -->
+    $(document).ready(function() {
 
-    <script>
-        $(document).ready(function () {
-            doer();
-            ser();
-            restart();
+      $(".nav-icon").click(function() {
+        $(".nav-icon, .nav").toggleClass("open");
+      });
 
-            $('#nav-icon').click(function () {
-                $("#nav-icon, #nav").toggleClass('open');
-            });
+      //CZEMU TO NIE DZIAŁA?!
+      $("input").change(function() {
+        Trigger(1);
+      });
 
-            $('button').click(function () {
-                $("#nav-icon, #nav").toggleClass('open');
-                $("main").hide();
-                $("#" + $(this).html()).show();
-            });
-        });
-
-        var settings = ["l", "num", "s", "t", "color", "colrange", "colintens", "speed"];
-
-        function preset(input) {
-                let saved = [
-                    [Math.random() * 10, Math.random() * 300, Math.random() * 300, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 20],
-                    [1,150,75,70,90,15,100,1],
-                    [1,9,213,2,98,0,56,20],
-                    [10, 50, 100, 3, Math.random() * 360, Math.random() * 360, 50, 20],
-                    [8, 100, 125, 2, 0, 360, 90, 0],
-					[6,258,41,54,318,236,78,18],
-					[3,164,75,3,216,139,55,8],
-					[1,123,123,14,284,164,55,11]
-            ];
-            if (input === 100) {
-                let seed = $("#seed").attr("value");
-                saved.push(seed.trim().split(","));
-                input = saved.length - 1;
-            }
-
-            for(i=0;i<8;i++){
-              $("#"+settings[i]).attr("value",saved[input][i])
-            };
-
-            restart();
+      $(".presets").click(function() {
+        let temp = $(this).attr("value");
+        if (temp == 100) {
+          settings = [Math.random() * 10, Math.random() * 200, Math.random() * 200, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 10];
+        } else {
+          settings = presets[temp];
         }
-    </script>
+        restart();
+      });
+
+      $(window).resize(function() {
+        restart();
+      });
+
+      var content_for_table = [
+        ["dot-size", 1, "", "range", [1, 10]],
+        ["dot-number", 100, "", "range", [5, 250]],
+        ["dot-range", 100, "touch range", "range", [1, 300]],
+        ["dot-timeout", 30, "", "range", [1, 50]],
+        ["dot-color", 100, "", "range", [0, 360]],
+        ["dot-colrange", 100, "color diversity", "range", [0, 360]],
+        ["dot-colintens", 100, "color intensivity", "range", [10, 100]], //zmienić na switch button
+        ["dot-speed", 2, "speed", "range", [1, 20]],
+        ["dot-center", "", "start center", "checkbox"],
+        ["dot-symetry", "", "symetric", "checkbox"],
+        ["dot-constant", "", "constant speed", "checkbox"],
+        ["dot-seed", 0, "seed", "text"]
+      ];
+      //[id,value,label,other]
+
+      var table_content = [];
+      for (i = 0; i < content_for_table.length; i++) {
+        let cft = content_for_table[i];
+        let one_row = (cft[2] == "") ? [cft[0].replace("-", " ")] : [cft[2]];
+        let temp = "";
+        if (cft[3] == "checkbox") {
+          temp = '<label class="switch"><input type="checkbox" id="' + cft[0] + '" ' + cft[1]
+          temp += ' onchange="Trigger(1)" ><span class="checkbox_slider"></span></label>'
+        } else if (cft[3] == "range") {
+          temp = '<input type="' + cft[3] + '" id="' + cft[0] + '" value="' + cft[1] + '" class="range_slider" onchange="Trigger(1)" ';
+          temp += 'min=' + cft[4][0] + ' max="' + cft[4][1] + '"/>';
+        } else if (cft[3] == "text"){
+          temp = '<input type="' + cft[3] + '" id="' + cft[0] + '" value="' + cft[1] + '"  onchange="Trigger(0)" />';
+        }
+
+        one_row.push(temp);
+        table_content.push(one_row);
+      }
+      // "dot-number", "dot-range", "dot-timeout",
+      //"dot-color", "dot-colrange", "dot-colintens", "dot-speed"];
+
+      var table_body = '<table class="visual_settings big_font">';
+      for (var i = 0; i < table_content.length; i++) {
+        table_body += '<tr>';
+        for (var j = 0; j < table_content[0].length; j++) {
+          table_body += '<td>';
+          table_body += table_content[i][j];
+          table_body += '</td>';
+        }
+        table_body += '</tr>';
+      }
+      table_body += '</table>';
+      $('#setting-table').html(table_body);
+
+
+      doer();
+      Trigger(1);
+
+    });
+
+//rozdzielić na dwa bo robi błędy czasem w zapisie
+    function Trigger(status) {
+      settings = [];
+      if (status == 1) {
+        let temp = "";
+        for (i = 0; i < 8; i++) {
+          let value = $("#" + settingslist[i]).val();
+          settings.push(value);
+          temp += value + ",";
+        }
+        for (i = 8; i < 11; i++)
+          temp += $("#" + settingslist[i]).prop("checked") + ',';
+        $("#dot-seed").attr("value", temp.slice(0, -1));
+      }else{
+        settings=$("#dot-seed").val().trim().split(",");
+        for (i = 0; i < 8; i++)
+          $("#" + settingslist[i]).val(settings[i]);
+        for (i = 8; i < 11; i++)
+          $("#" + settingslist[i]).prop("checked", settings[i]);
+      }
+      restart();
+    }
+  </script>
 </head>
+
 <body>
 
-    <canvas width="10" height="10" style="position:absolute; top:0; left:0;"></canvas>
-
-    <div id="nav-icon">
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="nav-icon open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="center_outer nav open">
+    <!--nav-->
+    <div class="center_inner quarter left" style="background-color: #111111; opacity: 0.8; min-width:300px">
+      <h1 class="Headline">Find beauty in dots</h1>
+      <div id="setting-table" class="inline">
+      </div>
     </div>
-
-    <label id="settings" style="font-size:2vmin; position:fixed; bottom:0;"></label>
-	<a style="font-size:2vmin; position:fixed; bottom:15px;" onclick="preset(0)">randomize</a>
-
-    <div id="nav" class="cout" style="background:rgba(0,0,0,.75);overflow: scroll;">
-        <div class="cinn">
-            <div class="spoiler">
-                <h3>Size and quantity</h3>
-                <div>
-                    <label>Size</label>
-                    <input type="range" min="1" max="10" id="l" oninput="restart()" value="1"><br />
-                </div>
-
-                <div>
-                    <label>Quantity</label>
-                    <input type="range" min="1" max="500" id="num" oninput="restart()" value="50"><br />
-                </div>
-                <div>
-                    <label>Range</label>
-                    <input type="range" min="1" max="300" id="s" oninput="ser()" value="150"><br />
-                </div>
-                <div>
-                    <label>Ghost time</label>
-                    <input type="range" min="0" max="75" id="t" oninput="ser()" value="20"><br />
-                </div>
-            </div>
-            <div class="spoiler">
-                <h3>Color options</h3>
-                <div>
-                    <label>Color</label>
-                    <input type="range" min="0" max="360" id="color" oninput="restart()" value="200"><br />
-                </div>
-
-                <div>
-                    <label>Color variancy</label>
-                    <input type="range" min="0" max="360" id="colrange" oninput="restart()" value="50"><br />
-                </div>
-
-                <div>
-                    <label>color intense</label>
-                    <input type="range" min="50" max="100" id="colintens" oninput="restart()" value="50"><br />
-                </div>
-            </div>
-            <div class="spoiler">
-                <h3>Mechanics</h3>
-                <div>
-                    <label>speed</label>
-                    <input type="range" min="0" max="20" id="speed" oninput="restart()" value="14"><br />
-                </div>
-            </div>
-            <div class="spoiler">
-                <h3>Presets</h3>
-                <div class="button_container">
-                    <a onclick="preset(1)">preset1</a>
-                    <a onclick="preset(2)">preset2</a>
-                    <a onclick="preset(3)">preset3</a>
-                    <a onclick="preset(4)">preset4</a>
-					<br>
-                    <a onclick="preset(5)">Maćke</a>
-                    <a onclick="preset(6)">Chyłke</a>
-                    <a onclick="preset(7)">Asuna</a>
-                    <h3>Input seed</h3>
-                    <input type="text" id="seed" onchange="preset(100)" vakue=""/>
-                </div>
-            </div>
-            <br />
-
-        </div>
+    <div class="nav-outside three-fourth right" onclick='$(".nav-icon, .nav").toggleClass("open");'>
     </div>
+  </div>
+  <script>
+    W = window.innerWidth;
+    H = window.innerHeight;
+    var c = document.createElement('canvas'),
+      ctx = c.getContext('2d');
+    //document.body.appendChild(c);
+    document.body.insertBefore(c, document.body.firstChild);
+    c.width = W;
+    c.height = H;
+
+    var point = function(x, y) {
+      this.x = x;
+      this.y = y;
+
+      let color = settings[4];
+      let colrange = parseInt(Math.random() * settings[5]);
+      let temp = color + colrange;
+      this.c = 'hsl(' + temp + ',100%,' + settings[6] + '%)';
+      temp = settings[7];
+
+      if ($("#dot-symetry").prop("checked")) {
+        this.vx = temp * (Math.random() * 2 - 1);
+        this.vy = -this.vx;
+      } else if ($("#dot-constant").prop("checked")) {
+        this.vx = temp * Math.round(Math.random() * 2 - 1);
+        this.vy = temp * Math.round(Math.random() * 2 - 1);
+      } else {
+        this.vx = temp * (Math.random() * 2 - 1);
+        this.vy = temp * (Math.random() * 2 - 1);
+      }
 
 
-    <script>
-        W = window.innerWidth;
-        H = window.innerHeight;
-        var c = document.createElement('canvas'),
-            ctx = c.getContext('2d');
-        document.body.appendChild(c);
-        c.width = W;
-        c.height = H;
+      this.s = function(a) {
+        return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
+      };
 
-        var point = function (x, y) {
-            this.x = x;
-            this.y = y;
-            let color = parseInt($('#color').attr("value"));
-            let colrange = parseInt(Math.random() * $('#colrange').attr("value"));
-            let temp = color + colrange;
-            this.c = 'hsl(' + temp + ',100%,' + $('#colintens').attr("value") + '%)';
-            temp = $('#speed').attr("value");
-            this.vx = temp * Math.random() - 5;
-            this.vy = temp * Math.random() - 5;
+      this.move = function() {
+        if ((this.x + this.vx) < 0 || (this.x + this.vx) > W)
+          this.vx *= -1;
+        if ((this.y + this.vy) < 0 || (this.y + this.vy) > H)
+          this.vy *= -1;
+        this.x += this.vx;
+        this.y += this.vy;
+      };
+    };
 
 
-            this.s = function (a) {
-                return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
-            };
+    var mesh = function(n, d, t, l) {
+      this.n = n; //ilość obiektów
+      this.d = d; //zasięg obiektu
+      this.t = t; //czas życia obiektu
+      this.l = l; //grubość obiektu
 
-            this.move = function () {
-                if ((this.x + this.vx) < 0 || (this.x + this.vx) > W)
-                    this.vx *= -1;
-                if ((this.y + this.vy) < 0 || (this.y + this.vy) > H)
-                    this.vy *= -1;
-                this.x += this.vx;
-                this.y += this.vy;
-            };
-        };
+      this.F = [];
+      if ($("#dot-center").prop("checked")) {
+        for (var i = 0; i < n; i++)
+          this.F.push(new point(W / 2, H / 2));
+      } else {
+        for (var i = 0; i < n; i++)
+          this.F.push(new point(W * Math.random(), H * Math.random()));
+      }
 
+      this.move = function() {
+        for (var i = 0; i < this.n; i++)
+          this.F[i].move();
+      };
 
-        var mesh = function (n, d, t, l) {
-            this.n = n;     //ilość obiektów
-            this.d = d;     //zasięg obiektu
-            this.t = t;     //czas życia obiektu
-            this.l = l;     //grubość obiektu
+      this.draw = function() {
 
-            this.F = [];
-            for (var i = 0; i < n; i++)
-                this.F.push(new point(Math.random() * W, Math.random() * H));
-
-            this.move = function () {
-                for (var i = 0; i < this.n; i++)
-                    this.F[i].move();
-            };
-
-            this.draw = function () {
-
-                ctx.fillStyle = 'rgba(0,0,0,' + this.t + ')';
-                ctx.fillRect(0, 0, W, H);
-                ctx.lineWidth = this.l;
-                for (var i = 0; i < this.n; i++) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = this.F[i].c;
-                    ctx.moveTo(this.F[i].x, this.F[i].y);
-                    ctx.arc(this.F[i].x, this.F[i].y, l / 3, 0, 2 * Math.PI);
-                    for (var j = 0; j < this.n; j++)
-                        if (i !== j) {
-                            if (this.F[i].s(this.F[j]) < this.d) {
-                                ctx.moveTo(this.F[i].x, this.F[i].y);
-                                ctx.lineTo(this.F[j].x, this.F[j].y);
-                            }
-                        }
-                    ctx.stroke();
-                }
-            };
-        };
-
-        var M = new mesh(100, 50, 1, 1);
-
-        function doer() {
-            M.move();
-            M.draw();
-            ttt = requestAnimationFrame(doer);
+        ctx.fillStyle = 'rgba(0,0,0,' + this.t + ')';
+        ctx.fillRect(0, 0, W, H);
+        ctx.lineWidth = this.l;
+        for (var i = 0; i < this.n; i++) {
+          ctx.beginPath();
+          ctx.strokeStyle = this.F[i].c;
+          ctx.moveTo(this.F[i].x, this.F[i].y);
+          ctx.arc(this.F[i].x, this.F[i].y, l / 3, 0, 2 * Math.PI);
+          for (var j = 0; j < this.n; j++)
+            if (i !== j) {
+              if (this.F[i].s(this.F[j]) < this.d) {
+                ctx.moveTo(this.F[i].x, this.F[i].y);
+                ctx.lineTo(this.F[j].x, this.F[j].y);
+              }
+            }
+          ctx.stroke();
         }
+      };
+    };
 
+    var M = new mesh(100, 50, 1, 1);
 
+    function doer() {
+      M.move();
+      M.draw();
+      ttt = requestAnimationFrame(doer);
+    }
 
-        function restart() {
-            M.delete;
-            cancelAnimationFrame(ttt);
-            M = new mesh($("#num").attr("value") / 1, $("#s").attr("value") / 1, $("#t").attr("value") / 100, $("#l").attr("value") / 1);
-            doer();
-            updatelabel();
-        }
-
-
-        function ser() {
-            M.l = $("#l").attr("value") / 1;
-            M.t = $("#t").attr("value") / 100;
-            M.d = $("#s").attr("value") / 1;
-            updatelabel();
-        }
-
-        function updatelabel() {
-          let seed = "";
-          for(i=0;i<8;i++){
-            seed += $("#"+settings[i]).attr("value") + ",";
-          }
-          $("#settings").attr("value", seed.slice(0,-1));
-        }
-
-
-        function get(id) {
-            let temp = $("#" + id).attr("value") / 1;
-            return temp;        }
-
-        function set(id, val) {
-            $("#"+id).attr("value", Math.floor(val));}
-
-
-    </script>
-
-
-
+    function restart() {
+      if ($("#dot-symetry").prop("checked")) {
+        $("#dot-center").prop("checked", true);
+        $("#dot-constant").prop("checked", false);
+      }
+      M.delete;
+      cancelAnimationFrame(ttt);
+      M = new mesh(settings[1], settings[2] * 2, settings[3] / 100, settings[0]);
+      doer();
+    }
+  </script>
 </body>
+
 </html>

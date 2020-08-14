@@ -12,12 +12,11 @@
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <script>
     var settings = [1, 150, 75, 70, 90, 15, 100, 1];
-//["l", "num", "s", "t", "color", "colrange", "colintens", "speed"];
     let presets = [
-      [1,116,171,11,0,360,50,20],
+      [1, 116, 171, 11, 0, 360, 50, 20],
       [1, 150, 75, 70, 90, 15, 100, 1],
       [1, 9, 213, 2, 98, 0, 56, 20],
-      [7,50,100,75,82,100,50,2],
+      [7, 50, 100, 75, 82, 100, 50, 2],
       [8, 100, 125, 2, 0, 360, 90, 0],
       [6, 258, 41, 54, 318, 236, 78, 18],
       [3, 164, 75, 3, 216, 139, 55, 8],
@@ -32,17 +31,13 @@
         $(".nav-icon, .nav").toggleClass("open");
       });
 
-      $("button").click(function() {
-        $(".nav-icon, .nav").toggleClass("open");
-        //$("main").hide();
-        $("." + $(this).html()).show();
-      });
-
       $(".presetsy").click(function() {
         let temp = $(this).attr("value");
-        if (temp == 100){
+        if (temp == 100) {
           settings = [Math.random() * 10, Math.random() * 200, Math.random() * 200, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 10];
-        }else{settings = presets[temp];}
+        } else {
+          settings = presets[temp];
+        }
         restart();
       });
 
@@ -88,7 +83,6 @@
       //}else{zdjęcie(-100);}
     }
 
-
     function ImageExist(url) {
       var img = new Image();
       img.src = url;
@@ -99,7 +93,7 @@
 
 <body>
   <div class="canvas-protection">
-
+<!--
     <div class="nav-icon">
       <span></span>
       <span></span>
@@ -110,7 +104,7 @@
       </div>
       <div class="nav-outside">
       </div>
-    </div>
+    </div>-->
     <div id="Home" class="center_outer">
       <div class="center_inner">
 
@@ -140,7 +134,7 @@
       <div class="photo">
         <div onclick="zdjęcie(-1);" class="previous-photo">
           <p>
-            <</p>
+            << /p>
         </div>
         <div onclick="zdjęcie(1);" class="next-photo">
           <p>></p>
@@ -179,14 +173,16 @@
         <div class="navigation_button" style="width: 50%;">
           <a class="presetsy" value="1">Default</a>
           <a class="presetsy" value="2">Neon</a>
-            <a class="presetsy" value="3">Green Peace</a>
-            <a class="presetsy" value="0">Colorfull</a>
-        </br>
+          <a class="presetsy" value="3">Green Peace</a>
+          <a class="presetsy" value="0">Colorfull</a>
+          </br>
           <a class="presetsy" value="5">Maćke</a>
           <a class="presetsy" value="6">Chyła</a>
           <a class="presetsy" value="7">Asuna</a>
-        </br>
+          </br>
           <a class="presetsy" value="100">Random</a>
+          </br>
+          <a href="mesh.html" class="special">MUCH, MUCH MORE!</a>
         </div>
       </div>
     </div>
@@ -214,8 +210,8 @@
       this.c = 'hsl(' + temp + ',100%,' + settings[6] + '%)';
       temp = settings[7];
 
-      this.vx = temp * Math.random() + Math.random() * 2 - 1;
-      this.vy = temp * Math.random() + Math.random() * 2 - 1;
+      this.vx = temp * (Math.random() * 2 - 1);
+      this.vy = temp * (Math.random() * 2 - 1);
 
 
       this.s = function(a) {
@@ -241,7 +237,7 @@
 
       this.F = [];
       for (var i = 0; i < n; i++)
-        this.F.push(new point(Math.random() * W, Math.random() * H));
+        this.F.push(new point(W * Math.random(), H * Math.random()));
 
       this.move = function() {
         for (var i = 0; i < this.n; i++)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Playground Table</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    table {
+      border: 1px solid grey;
+    }
+  </style>
+  <script>
+    $(document).ready(function() {
+      var content_for_table = [
+      ["dot-size",1,"",""],
+      ["dot-number",100,"",""],
+      ["dot-range",100,"touch range",""]];
+      //[id,value,label,other]
+
+      var table_content = [];
+      for (i=0;i<content_for_table.length;i++){
+        let one_row = (content_for_table[i][2]=="") ? [content_for_table[i][0].replace("-"," ")] : [content_for_table[i][2]];
+        one_row.push('<input type="range" id="' + content_for_table[i][0] + '" value="' + content_for_table[i][1] + '" />')
+        table_content.push(one_row);
+      }
+        // "dot-number", "dot-range", "dot-timeout", "dot-color", "dot-colrange", "dot-colintens", "dot-speed"];
+
+      var table_body = '<table>';
+      for (var i = 0; i < table_content.length; i++) {
+        table_body += '<tr>';
+        for (var j = 0; j < table_content[0].length; j++) {
+          table_body += '<td>';
+          table_body += table_content[i][j];
+          table_body += '</td>';
+        }
+        table_body += '</tr>';
+      }
+      table_body += '</table>';
+      $('#setting-table').html(table_body);
+
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="setting-table" style="margin-top: 40px">
+    Table will gentare here.
+  </div>
+</body>
+
+</html>
