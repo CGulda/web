@@ -19,6 +19,33 @@
                     $("." + $(this).html()).show();
                 });
             });
+
+            function zdjęcie(n){
+              var str = $("#pbi_photo").attr("src");
+              str = str.substr(0,str.length-4);
+              let temp = str.substr(str.length-1,1);
+              temp = parseInt(temp) + parseInt(n);
+              (temp < 0) ? temp = 0 : temp = temp;
+              str = str.substr(0, str.length-1) + temp +".png";
+              if (ImageExist("file:///E:/JaNie/GIT/web/c.gulda/" + str)){
+              $("#pbi_photo").attr("src", str);}
+
+
+
+              //$.get("https://scontent-waw1-1.xx.fbcdn.net/v/t1.0-9/116908707_3198677430177918_4122428571169311383_n.jpg?_nc_cat=1&_nc_sid=8bfeb9&_nc_ohc=RDdVC7m0yi0AX-O7Hsa&_nc_ht=scontent-waw1-1.xx&oh=7ced4859cbec2338f79adbcd38274e88&oe=5F5D553F")//"file:///E:/JaNie/GIT/web/c.gulda/" + str)
+              //  .done(function() {
+              //      $("#pbi_photo").attr("src", str);
+              //  }).fail(function() {  })
+
+            }
+
+
+            function ImageExist(url)
+            {
+               var img = new Image();
+               img.src = url;
+               return img.height != 0;
+            }
         </script>
     </head>
     <body>
@@ -34,25 +61,37 @@
           </div>
         </div>
         <image class="cloud" src="https://i.pinimg.com/originals/19/8d/ae/198daeda14097d45e417e62ff283f10e.png"></image>
-        <div class="Headline">
-            <h1>AREAS</h1>
-        </div>
-        <div class="select">
-            <div>
-              <a href="index.html#pbi"><img  style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></a>
-              <span>Power BI</span>
-            </div>
-            <div>
-              <a href="index.html#pbi"><img style="background-color: #F2C80F;" src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></a>
-              <span>Web projects</span>
-            </div>
-            <div>
-              <a href="index.html#pbi"><img style="background-color: #F2C80F;"src="https://lh3.googleusercontent.com/proxy/bTmnOCkwytPitru7KKDWwH5irWXg1LiBSMuJz5Xxk8443xiQEAdTs6FN03j8xO6eQI5reNivyOexrMOnGi2kEtr79XXzhhf-ZNI7WCZ9l0Rv1SF3Cyjl"></a>
-              <span>Other stuff</span>
-            </div>
-        </div>
+        <div class="center_outer"><div class="center_inner">
+
+          <div class="Headline">
+              <h1>AREAS</h1>
+          </div>
+          <div class="select">
+              <div>
+                <a href="index.html#pbi"><img  style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></a>
+                <span>Power BI</span>
+              </div>
+              <div>
+                <a href="index.html#pbi"><img style="background-color: #F2C80F;" src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></a>
+                <span>Web projects</span>
+              </div>
+              <div>
+                <a href="index.html#pbi"><img style="background-color: #F2C80F;"src="https://cdn.pixabay.com/photo/2018/03/31/16/21/pixel-3278512_1280.png"></a>
+                <span>Other stuff</span>
+              </div>
+          </div>
+      </div></div>
         <div id="pbi" class="panel">
-          content
+                  <div class="Headline">
+                      <h1 style="color: #F2C80F;">Power BI</h1>
+                  </div>
+          <div class="photo">
+            <div onclick="zdjęcie(-1);" class="previous-photo"><p><</p></div>
+            <div onclick="zdjęcie(1);" class="next-photo"><p>></p></div>
+            <div class="center_inner"><img id="pbi_photo" src="pbi/messanger-0.png" info="0"></div>
+
+
+          </div>
         </div>
     </body>
 </html>
