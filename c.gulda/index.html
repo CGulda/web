@@ -1,211 +1,290 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="css/style.css">
-        <title>CGulda</title>
-        <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-        <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA" rel="icon" type="image/x-icon"/>
-        <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-        <script>
 
-          var settings = [1, 150, 75, 70, 90, 15, 100, 1];
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <title>CGulda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <link
+    href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA"
+    rel="icon" type="image/x-icon" />
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script>
+    var settings = [1, 150, 75, 70, 90, 15, 100, 1];
+//["l", "num", "s", "t", "color", "colrange", "colintens", "speed"];
+    let presets = [
+      [1,116,171,11,0,360,50,20],
+      [1, 150, 75, 70, 90, 15, 100, 1],
+      [1, 9, 213, 2, 98, 0, 56, 20],
+      [7,50,100,75,82,100,50,2],
+      [8, 100, 125, 2, 0, 360, 90, 0],
+      [6, 258, 41, 54, 318, 236, 78, 18],
+      [3, 164, 75, 3, 216, 139, 55, 8],
+      [1, 123, 123, 14, 284, 164, 55, 11]
+    ];
 
-          let presets = [
-            [Math.random() * 10, Math.random() * 300, Math.random() * 300, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 20],
-            [1, 150, 75, 70, 90, 15, 100, 1],
-            [1, 9, 213, 2, 98, 0, 56, 20],
-            [10, 50, 100, 3, Math.random() * 360, Math.random() * 360, 50, 20],
-            [8, 100, 125, 2, 0, 360, 90, 0],
-            [6, 258, 41, 54, 318, 236, 78, 18],
-            [3, 164, 75, 3, 216, 139, 55, 8],
-            [1, 123, 123, 14, 284, 164, 55, 11]
-          ];
+    $(document).ready(function() {
+      doer();
+      restart();
 
-            $(document).ready(function() {
-                doer();
-                restart();
+      $(".nav-icon").click(function() {
+        $(".nav-icon, .nav").toggleClass("open");
+      });
 
-                $(".nav-icon").click(function() {
-                    $(".nav-icon, .nav").toggleClass("open");
-                });
+      $("button").click(function() {
+        $(".nav-icon, .nav").toggleClass("open");
+        //$("main").hide();
+        $("." + $(this).html()).show();
+      });
 
-                $("button").click(function() {
-                    $(".nav-icon, .nav").toggleClass("open");
-                    //$("main").hide();
-                    $("." + $(this).html()).show();
-                });
+      $(".presetsy").click(function() {
+        let temp = $(this).attr("value");
+        if (temp == 100){
+          settings = [Math.random() * 10, Math.random() * 200, Math.random() * 200, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 10];
+        }else{settings = presets[temp];}
+        restart();
+      });
 
-                $(window).resize(function(){
-                  restart();
-                });
+      $(window).resize(function() {
+        restart();
+      });
 
-                if($( window ).height()> $( window ).width()){
-                  $(".photo").toggleClass("rotate")
-                }
-            });
+      if ($(window).height() > $(window).width()) {
+        $(".photo").toggleClass("rotate")
+      }
 
-            function zdjęcie(n){
-              var str = $("#pbi_photo").attr("src");
-              str = str.substr(0,str.length-4);
-              let temp = str.substr(str.search("_")+1);
-              temp = parseInt(temp) + parseInt(n);
-              if(temp<0){temp=11}else if (temp>11) {temp=0}
-              str = str.substr(0, str.search("_")+1) + temp +".png";
-              //if (ImageExist("file:///E:/JaNie/GIT/web/c.gulda/" + str)){
-              $("#pbi_photo").attr("src", str);
-              //}else{zdjęcie(-100);}
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 200) {
+          $('.go-top').fadeIn(200);
+        } else {
+          $('.go-top').fadeOut(200);
+        }
+      });
 
-            }
+      // Animate the scroll to top
+      $('.go-top').click(function(event) {
+        event.preventDefault();
+
+        $('html, body').animate({
+          scrollTop: 0
+        }, 300);
+      })
+    });
+
+    function zdjęcie(n) {
+      var str = $("#pbi_photo").attr("src");
+      str = str.substr(0, str.length - 4);
+      let temp = str.substr(str.search("_") + 1);
+      temp = parseInt(temp) + parseInt(n);
+      if (temp < 0) {
+        temp = 11
+      } else if (temp > 11) {
+        temp = 0
+      }
+      str = str.substr(0, str.search("_") + 1) + temp + ".png";
+      //if (ImageExist("file:///E:/JaNie/GIT/web/c.gulda/" + str)){
+      $("#pbi_photo").attr("src", str);
+      //}else{zdjęcie(-100);}
+    }
 
 
-            function ImageExist(url)
-            {
-               var img = new Image();
-               img.src = url;
-               return img.height != 0;
-            }
-        </script>
-    </head>
-    <body>
-      <div class="canvas-protection">
+    function ImageExist(url) {
+      var img = new Image();
+      img.src = url;
+      return img.height != 0;
+    }
+  </script>
+</head>
 
-        <div class="nav-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="nav">
-          <div class="nav-inside">
-          </div>
-          <div class="nav-outside">
-          </div>
-        </div>
-        <div id="Home" class="center_outer"><div class="center_inner">
+<body>
+  <div class="canvas-protection">
 
-          <div class="Headline">
-              <h1>AREAS</h1>
-          </div>
-          <div class="select">
-              <div>
-                <a href="index.html#pbi"><img  style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></a>
-                <span>Power BI</span>
-              </div>
-              <div>
-                <a href="index.html#pbi"><img style="background-color: #F2C80F;" src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></a>
-                <span>Web projects</span>
-              </div>
-              <div>
-                <a href="index.html#pbi"><img style="background-color: #F2C80F;"src="https://cdn.pixabay.com/photo/2018/03/31/16/21/pixel-3278512_1280.png"></a>
-                <span>Other stuff</span>
-              </div>
-          </div>
+    <div class="nav-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav">
+      <div class="nav-inside">
+      </div>
+      <div class="nav-outside">
       </div>
     </div>
-        <div id="pbi" class="panel">
-                  <div class="Headline">
-                      <h1 style="color: #F2C80F;">Power BI</h1>
-                  </div>
-          <div class="photo">
-            <div onclick="zdjęcie(-1);" class="previous-photo"><p><</p></div>
-            <div onclick="zdjęcie(1);" class="next-photo"><p>></p></div>
-            <div class="center_inner"><img id="pbi_photo" src="pbi/pbi_0.png" info="0"></div>
+    <div id="Home" class="center_outer">
+      <div class="center_inner">
+
+        <div class="Headline">
+          <h1>AREAS</h1>
+        </div>
+        <div class="select">
+          <div>
+            <a href="index.html#pbi"><img style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></a>
+            <span>Power BI</span>
+          </div>
+          <div>
+            <a href="index.html#js"><img style="background-color: #F2C80F;" src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></a>
+            <span>Web projects</span>
+          </div>
+          <div>
+            <a href="index.html#other"><img style="background-color: #F2C80F;" src="https://cdn.pixabay.com/photo/2018/03/31/16/21/pixel-3278512_1280.png"></a>
+            <span>Other stuff</span>
           </div>
         </div>
       </div>
-        <div id="JS" class="panel">
+    </div>
+    <div id="pbi" class="panel">
+      <div class="Headline">
+        <h1 style="color: #F2C80F;">Power BI</h1>
       </div>
+      <div class="photo">
+        <div onclick="zdjęcie(-1);" class="previous-photo">
+          <p>
+            <</p>
+        </div>
+        <div onclick="zdjęcie(1);" class="next-photo">
+          <p>></p>
+        </div>
+        <div class="center_inner"><img id="pbi_photo" src="pbi/pbi_0.png" info="0"></div>
+      </div>
+    </div>
+    <div id="js" class="center_outer">
+      <div class="center_inner">
+        <div class="Headline">
+          <h1 style="color: #F2C80F;">Simlpe web projects</h1>
+        </div>
 
-        <script>
-          W = window.innerWidth;
-          H = window.innerHeight;
-          var c = document.createElement('canvas'),
-            ctx = c.getContext('2d');
-          //document.body.appendChild(c);
-          document.body.insertBefore(c, document.body.firstChild);
-          c.width = W;
-          c.height = H;
+        <div class="navigation_button" style="width: 50%;">
+          <a href="pathfinder.html" class="special">Pathfinder</a>
+          <a href="snake.html" class="special">SNAKE</a>
+          <a href="snake2.html" class="special">SNAKE - automove</a>
+          </br>
+          <a href="svgdraw.html">Dotter</a>
+          <a href="coordinates.html">Coordinates</a>
+          </br>
+          <a href="loader.html">Loader</a>
+          <a href="clicker.html">Clicker</a>
+          <a href="work.html">Work simulator</a>
+          <a href="projects/index.html">Short projects</a>
 
-          var point = function(x, y) {
-            this.x = x;
-            this.y = y;
+        </div>
+      </div>
+    </div>
+    <div id="other" class="center_outer">
+      <div class="center_inner">
+        <div class="Headline">
+          <h1 style="color: #F2C80F;">Mesh visualization</h1>
+        </div>
 
-            let color = settings[4];
-            let colrange = parseInt(Math.random() * settings[5]);
-            let temp = color + colrange;
-            this.c = 'hsl(' + temp + ',100%,' + settings[6] + '%)';
-            temp = settings[7];
+        <div class="navigation_button" style="width: 50%;">
+          <a class="presetsy" value="1">Default</a>
+          <a class="presetsy" value="2">Neon</a>
+            <a class="presetsy" value="3">Green Peace</a>
+            <a class="presetsy" value="0">Colorfull</a>
+        </br>
+          <a class="presetsy" value="5">Maćke</a>
+          <a class="presetsy" value="6">Chyła</a>
+          <a class="presetsy" value="7">Asuna</a>
+        </br>
+          <a class="presetsy" value="100">Random</a>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="go-top">Go Top</a>
 
-            this.vx = temp * Math.random() + Math.random()*2 - 1;
-            this.vy = temp * Math.random() + Math.random()*2 - 1;
+  </div>
+
+  <script>
+    W = window.innerWidth;
+    H = window.innerHeight;
+    var c = document.createElement('canvas'),
+      ctx = c.getContext('2d');
+    //document.body.appendChild(c);
+    document.body.insertBefore(c, document.body.firstChild);
+    c.width = W;
+    c.height = H;
+
+    var point = function(x, y) {
+      this.x = x;
+      this.y = y;
+
+      let color = settings[4];
+      let colrange = parseInt(Math.random() * settings[5]);
+      let temp = color + colrange;
+      this.c = 'hsl(' + temp + ',100%,' + settings[6] + '%)';
+      temp = settings[7];
+
+      this.vx = temp * Math.random() + Math.random() * 2 - 1;
+      this.vy = temp * Math.random() + Math.random() * 2 - 1;
 
 
-            this.s = function(a) {
-              return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
-            };
+      this.s = function(a) {
+        return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
+      };
 
-            this.move = function() {
-              if ((this.x + this.vx) < 0 || (this.x + this.vx) > W)
-                this.vx *= -1;
-              if ((this.y + this.vy) < 0 || (this.y + this.vy) > H)
-                this.vy *= -1;
-              this.x += this.vx;
-              this.y += this.vy;
-            };
-          };
+      this.move = function() {
+        if ((this.x + this.vx) < 0 || (this.x + this.vx) > W)
+          this.vx *= -1;
+        if ((this.y + this.vy) < 0 || (this.y + this.vy) > H)
+          this.vy *= -1;
+        this.x += this.vx;
+        this.y += this.vy;
+      };
+    };
 
 
-          var mesh = function(n, d, t, l) {
-            this.n = n; //ilość obiektów
-            this.d = d; //zasięg obiektu
-            this.t = t; //czas życia obiektu
-            this.l = l; //grubość obiektu
+    var mesh = function(n, d, t, l) {
+      this.n = n; //ilość obiektów
+      this.d = d; //zasięg obiektu
+      this.t = t; //czas życia obiektu
+      this.l = l; //grubość obiektu
 
-            this.F = [];
-            for (var i = 0; i < n; i++)
-              this.F.push(new point(Math.random() * W, Math.random() * H));
+      this.F = [];
+      for (var i = 0; i < n; i++)
+        this.F.push(new point(Math.random() * W, Math.random() * H));
 
-            this.move = function() {
-              for (var i = 0; i < this.n; i++)
-                this.F[i].move();
-            };
+      this.move = function() {
+        for (var i = 0; i < this.n; i++)
+          this.F[i].move();
+      };
 
-            this.draw = function() {
+      this.draw = function() {
 
-              ctx.fillStyle = 'rgba(0,0,0,' + this.t + ')';
-              ctx.fillRect(0, 0, W, H);
-              ctx.lineWidth = this.l;
-              for (var i = 0; i < this.n; i++) {
-                ctx.beginPath();
-                ctx.strokeStyle = this.F[i].c;
+        ctx.fillStyle = 'rgba(0,0,0,' + this.t + ')';
+        ctx.fillRect(0, 0, W, H);
+        ctx.lineWidth = this.l;
+        for (var i = 0; i < this.n; i++) {
+          ctx.beginPath();
+          ctx.strokeStyle = this.F[i].c;
+          ctx.moveTo(this.F[i].x, this.F[i].y);
+          ctx.arc(this.F[i].x, this.F[i].y, l / 3, 0, 2 * Math.PI);
+          for (var j = 0; j < this.n; j++)
+            if (i !== j) {
+              if (this.F[i].s(this.F[j]) < this.d) {
                 ctx.moveTo(this.F[i].x, this.F[i].y);
-                ctx.arc(this.F[i].x, this.F[i].y, l / 3, 0, 2 * Math.PI);
-                for (var j = 0; j < this.n; j++)
-                  if (i !== j) {
-                    if (this.F[i].s(this.F[j]) < this.d) {
-                      ctx.moveTo(this.F[i].x, this.F[i].y);
-                      ctx.lineTo(this.F[j].x, this.F[j].y);
-                    }
-                  }
-                ctx.stroke();
+                ctx.lineTo(this.F[j].x, this.F[j].y);
               }
-            };
-          };
+            }
+          ctx.stroke();
+        }
+      };
+    };
 
-          var M = new mesh(100, 50, 1, 1);
+    var M = new mesh(100, 50, 1, 1);
 
-          function doer() {
-            M.move();
-            M.draw();
-            ttt = requestAnimationFrame(doer);
-          }
+    function doer() {
+      M.move();
+      M.draw();
+      ttt = requestAnimationFrame(doer);
+    }
 
-          function restart() {
-            M.delete;
-            cancelAnimationFrame(ttt);
-            M = new mesh(settings[1], settings[2], settings[3], settings[0]);
-            doer();
-          }
-        </script>
-    </body>
+    function restart() {
+      M.delete;
+      cancelAnimationFrame(ttt);
+      M = new mesh(settings[1], settings[2], settings[3], settings[0]);
+      doer();
+    }
+  </script>
+</body>
+
 </html>
