@@ -1,0 +1,257 @@
+<html>
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" href="http://c.gulda.pl/css/core.css">
+    <link rel="stylesheet" href="http://c.gulda.pl/css/elements.css">
+    <link rel="stylesheet" href="http://c.gulda.pl/css/hammenu.css">
+    <link rel="stylesheet" href="http://c.gulda.pl/css/efects.css">
+    <!--
+    -->
+
+    <script>
+        $(document).ready(function () {
+            doer();
+            ser();
+            restart();
+
+            $('#nav-icon').click(function () {
+                $("#nav-icon, #nav").toggleClass('open');
+            });
+
+            $('button').click(function () {
+                $("#nav-icon, #nav").toggleClass('open');
+                $("main").hide();
+                $("#" + $(this).html()).show();
+            });
+        });
+
+        var settings = ["l", "num", "s", "t", "color", "colrange", "colintens", "speed"];
+
+        function preset(input) {
+                let saved = [
+                    [Math.random() * 10, Math.random() * 300, Math.random() * 300, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 20],
+                    [1,150,75,70,90,15,100,1],
+                    [1,9,213,2,98,0,56,20],
+                    [10, 50, 100, 3, Math.random() * 360, Math.random() * 360, 50, 20],
+                    [8, 100, 125, 2, 0, 360, 90, 0],
+					[6,258,41,54,318,236,78,18],
+					[3,164,75,3,216,139,55,8],
+					[1,123,123,14,284,164,55,11]
+            ];
+            if (input === 100) {
+                let seed = $("#seed").attr("value");
+                saved.push(seed.trim().split(","));
+                input = saved.length - 1;
+            }
+
+            for(i=0;i<8;i++){
+              $("#"+settings[i]).attr("value",saved[input][i])
+            };
+
+            restart();
+        }
+    </script>
+</head>
+<body>
+
+    <canvas width="10" height="10" style="position:absolute; top:0; left:0;"></canvas>
+
+    <div id="nav-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <label id="settings" style="font-size:2vmin; position:fixed; bottom:0;"></label>
+	<a style="font-size:2vmin; position:fixed; bottom:15px;" onclick="preset(0)">randomize</a>
+
+    <div id="nav" class="cout" style="background:rgba(0,0,0,.75);overflow: scroll;">
+        <div class="cinn">
+            <div class="spoiler">
+                <h3>Size and quantity</h3>
+                <div>
+                    <label>Size</label>
+                    <input type="range" min="1" max="10" id="l" oninput="restart()" value="1"><br />
+                </div>
+
+                <div>
+                    <label>Quantity</label>
+                    <input type="range" min="1" max="500" id="num" oninput="restart()" value="50"><br />
+                </div>
+                <div>
+                    <label>Range</label>
+                    <input type="range" min="1" max="300" id="s" oninput="ser()" value="150"><br />
+                </div>
+                <div>
+                    <label>Ghost time</label>
+                    <input type="range" min="0" max="75" id="t" oninput="ser()" value="20"><br />
+                </div>
+            </div>
+            <div class="spoiler">
+                <h3>Color options</h3>
+                <div>
+                    <label>Color</label>
+                    <input type="range" min="0" max="360" id="color" oninput="restart()" value="200"><br />
+                </div>
+
+                <div>
+                    <label>Color variancy</label>
+                    <input type="range" min="0" max="360" id="colrange" oninput="restart()" value="50"><br />
+                </div>
+
+                <div>
+                    <label>color intense</label>
+                    <input type="range" min="50" max="100" id="colintens" oninput="restart()" value="50"><br />
+                </div>
+            </div>
+            <div class="spoiler">
+                <h3>Mechanics</h3>
+                <div>
+                    <label>speed</label>
+                    <input type="range" min="0" max="20" id="speed" oninput="restart()" value="14"><br />
+                </div>
+            </div>
+            <div class="spoiler">
+                <h3>Presets</h3>
+                <div class="button_container">
+                    <a onclick="preset(1)">preset1</a>
+                    <a onclick="preset(2)">preset2</a>
+                    <a onclick="preset(3)">preset3</a>
+                    <a onclick="preset(4)">preset4</a>
+					<br>
+                    <a onclick="preset(5)">Maćke</a>
+                    <a onclick="preset(6)">Chyłke</a>
+                    <a onclick="preset(7)">Asuna</a>
+                    <h3>Input seed</h3>
+                    <input type="text" id="seed" onchange="preset(100)" vakue=""/>
+                </div>
+            </div>
+            <br />
+
+        </div>
+    </div>
+
+
+    <script>
+        W = window.innerWidth;
+        H = window.innerHeight;
+        var c = document.createElement('canvas'),
+            ctx = c.getContext('2d');
+        document.body.appendChild(c);
+        c.width = W;
+        c.height = H;
+
+        var point = function (x, y) {
+            this.x = x;
+            this.y = y;
+            let color = parseInt($('#color').attr("value"));
+            let colrange = parseInt(Math.random() * $('#colrange').attr("value"));
+            let temp = color + colrange;
+            this.c = 'hsl(' + temp + ',100%,' + $('#colintens').attr("value") + '%)';
+            temp = $('#speed').attr("value");
+            this.vx = temp * Math.random() - 5;
+            this.vy = temp * Math.random() - 5;
+
+
+            this.s = function (a) {
+                return Math.sqrt((this.x - a.x) * (this.x - a.x) + (this.y - a.y) * (this.y - a.y));
+            };
+
+            this.move = function () {
+                if ((this.x + this.vx) < 0 || (this.x + this.vx) > W)
+                    this.vx *= -1;
+                if ((this.y + this.vy) < 0 || (this.y + this.vy) > H)
+                    this.vy *= -1;
+                this.x += this.vx;
+                this.y += this.vy;
+            };
+        };
+
+
+        var mesh = function (n, d, t, l) {
+            this.n = n;     //ilość obiektów
+            this.d = d;     //zasięg obiektu
+            this.t = t;     //czas życia obiektu
+            this.l = l;     //grubość obiektu
+
+            this.F = [];
+            for (var i = 0; i < n; i++)
+                this.F.push(new point(Math.random() * W, Math.random() * H));
+
+            this.move = function () {
+                for (var i = 0; i < this.n; i++)
+                    this.F[i].move();
+            };
+
+            this.draw = function () {
+
+                ctx.fillStyle = 'rgba(0,0,0,' + this.t + ')';
+                ctx.fillRect(0, 0, W, H);
+                ctx.lineWidth = this.l;
+                for (var i = 0; i < this.n; i++) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = this.F[i].c;
+                    ctx.moveTo(this.F[i].x, this.F[i].y);
+                    ctx.arc(this.F[i].x, this.F[i].y, l / 3, 0, 2 * Math.PI);
+                    for (var j = 0; j < this.n; j++)
+                        if (i !== j) {
+                            if (this.F[i].s(this.F[j]) < this.d) {
+                                ctx.moveTo(this.F[i].x, this.F[i].y);
+                                ctx.lineTo(this.F[j].x, this.F[j].y);
+                            }
+                        }
+                    ctx.stroke();
+                }
+            };
+        };
+
+        var M = new mesh(100, 50, 1, 1);
+
+        function doer() {
+            M.move();
+            M.draw();
+            ttt = requestAnimationFrame(doer);
+        }
+
+
+
+        function restart() {
+            M.delete;
+            cancelAnimationFrame(ttt);
+            M = new mesh($("#num").attr("value") / 1, $("#s").attr("value") / 1, $("#t").attr("value") / 100, $("#l").attr("value") / 1);
+            doer();
+            updatelabel();
+        }
+
+
+        function ser() {
+            M.l = $("#l").attr("value") / 1;
+            M.t = $("#t").attr("value") / 100;
+            M.d = $("#s").attr("value") / 1;
+            updatelabel();
+        }
+
+        function updatelabel() {
+          let seed = "";
+          for(i=0;i<8;i++){
+            seed += $("#"+settings[i]).attr("value") + ",";
+          }
+          $("#settings").attr("value", seed.slice(0,-1));
+        }
+
+
+        function get(id) {
+            let temp = $("#" + id).attr("value") / 1;
+            return temp;        }
+
+        function set(id, val) {
+            $("#"+id).attr("value", Math.floor(val));}
+
+
+    </script>
+
+
+
+</body>
+</html>

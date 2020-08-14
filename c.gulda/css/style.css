@@ -1,17 +1,37 @@
 html, body {
-  background-color: black;
   color:lightgrey;
   margin:0;
     height: 100%;
     width: 100%;
     padding: 0;
     text-align: center;
+    background: black;
+}
+
+.canvas-protection{
+  z-index: 1;
+  position: absolute;
+}
+
+canvas, .canvas-protection{
+  height: 100%;
+  width: 100%;
+  top:0;
+  left: 0;
+}
+
+canvas{
+  position: fixed;
+  overflow: hidden;
+  z-index: auto;
+  opacity: 0.5;
 }
 
 .center_outer {
     display: table;
     width: 100%;
     height: 100%;
+    z-index: 1;
 }
 
 .center_inner {
@@ -32,6 +52,7 @@ html, body {
 
 .panel {
   min-height: 100vh;
+  z-index: 1;
 }
 
 .select > div {
@@ -65,10 +86,15 @@ opacity: 1;
   visibility: visible;
 }
 
+.rotate{
+  transition: rotate(90deg);
+}
+
 .photo{
   display: table;
   width: 100%;
   height: 60vw;
+  max-height: 900px;
   background-color: black;
   margin:0;
 }
@@ -77,6 +103,7 @@ opacity: 1;
   margin: auto;
   max-height: 100%;
   max-width: 100%;
+  max-width: 1600px;
 }
 
 .previous-photo, .next-photo{
@@ -101,19 +128,9 @@ opacity: 1;
   .previous-photo{    left:0;  }
   .next-photo{      right:0;    }
 
-.cloud {
-  position: absolute;
-  left:53%;
-  top:100px;
-  max-width: 15%;
-  max-height: 15%;
-  opacity:0.5;
-}
-
 .panel{
   position: absolute;
   top:100%;
-  background-color: #121212;
   min-height: 100vh;
   width: auto;
   min-width: 100%;
