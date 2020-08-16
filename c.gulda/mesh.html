@@ -16,40 +16,15 @@
     ];
     var settings = [1, 150, 75, 70, 90, 15, 100, 1];
     let presets = [
-      [1, 116, 171, 11, 0, 360, 50, 20],
-      [1, 150, 75, 70, 90, 15, 100, 1],
-      [1, 9, 213, 2, 98, 0, 56, 20],
-      [7, 50, 100, 75, 82, 100, 50, 2],
-      [8, 100, 125, 2, 0, 360, 90, 0],
-      [6, 258, 41, 54, 318, 236, 78, 18],
-      [3, 164, 75, 3, 216, 139, 55, 8],
-      [1, 123, 123, 14, 284, 164, 55, 11]
+      ["Random"],
+      ["Default", [1, 150, 75, 70, 90, 15, 100, 1, false, false, false]],
+      ["Purple", [1, 9, 213, 2, 98, 0, 56, 20, false, false, false]],
+      ["Star",[1,38,300,8,0,0,100,5,true,false,true]],
+      ["Constelations",[10,70,27,32,211,345,89,1,false,false,false]],
+      ["Weeb",[1,83,195,50,155,313,55,5,true,true,false]]
     ];
 
     $(document).ready(function() {
-
-      $(".nav-icon").click(function() {
-        $(".nav-icon, .nav").toggleClass("open");
-      });
-
-      //CZEMU TO NIE DZIAŁA?!
-      $("input").change(function() {
-        Trigger(1);
-      });
-
-      $(".presets").click(function() {
-        let temp = $(this).attr("value");
-        if (temp == 100) {
-          settings = [Math.random() * 10, Math.random() * 200, Math.random() * 200, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 10];
-        } else {
-          settings = presets[temp];
-        }
-        restart();
-      });
-
-      $(window).resize(function() {
-        restart();
-      });
 
       var content_for_table = [
         ["dot-size", 1, "", "range", [1, 10]],
@@ -78,7 +53,7 @@
         } else if (cft[3] == "range") {
           temp = '<input type="' + cft[3] + '" id="' + cft[0] + '" value="' + cft[1] + '" class="range_slider" onchange="Trigger(1)" ';
           temp += 'min=' + cft[4][0] + ' max="' + cft[4][1] + '"/>';
-        } else if (cft[3] == "text"){
+        } else if (cft[3] == "text") {
           temp = '<input type="' + cft[3] + '" id="' + cft[0] + '" value="' + cft[1] + '"  onchange="Trigger(0)" />';
         }
 
@@ -101,15 +76,63 @@
       table_body += '</table>';
       $('#setting-table').html(table_body);
 
+      var preset_html = '<div class="choose_button three-fourth">';
+      for (i = 0; i < presets.length; i++) {
+        preset_html += '<a class="presets" value="' + i + '">' + presets[i][0] + '</a>';
+      }
+      $('#preset-div').html(preset_html + "</div>");
 
       doer();
       Trigger(1);
 
+      $(".nav-icon").click(function() {
+        $(".nav-icon, .nav").toggleClass("open");
+      });
+
+      $(window).resize(function() {
+        restart();
+      });
+
+      //CZEMU TO NIE DZIAŁA?!
+      $("input").change(function() {
+        Trigger(1);
+      });
+
+    //POPRAWIĆ ZCZYTYWANIE
+      $(".presets").click(function() {
+        let ind = $(this).attr("value");
+        let temp = [];
+        if (ind == 0) {
+          temp = [Math.random() * 2, Math.random() * 100 + 10, Math.random() * 180 + 20, Math.random() * 75, Math.random() * 360, Math.random() * 360, Math.random() * 50 + 50, Math.random() * 10, "false", "false", "false"];
+        } else {
+          temp = presets[ind][1];
+        }
+        $("#dot-seed").attr("value", temp.join());
+        Trigger(0);
+      });
+
     });
 
-//rozdzielić na dwa bo robi błędy czasem w zapisie
     function Trigger(status) {
-      settings = [];
+
+      if (status == 0) { //READ SEED
+        settings = $("#dot-seed").val().trim().split(",");
+        for (i = 0; i < 8; i++)
+          $("#" + settingslist[i]).val(settings[i]);
+        for (i = 8; i < 11; i++) {
+          if ($("#" + settingslist[i]).prop("checked", settings[i])==true) {
+            $("#" + settingslist[i]).prop("checked", true);
+          } else {
+            $("#" + settingslist[i]).prop("checked", false);
+          }
+        }
+      }
+
+      if ($("#dot-symetry").prop("checked")) { //FIXED CENTER
+        $("#dot-center").prop("checked", true);
+        $("#dot-constant").prop("checked", false);
+      }
+
       if (status == 1) {
         let temp = "";
         for (i = 0; i < 8; i++) {
@@ -120,13 +143,8 @@
         for (i = 8; i < 11; i++)
           temp += $("#" + settingslist[i]).prop("checked") + ',';
         $("#dot-seed").attr("value", temp.slice(0, -1));
-      }else{
-        settings=$("#dot-seed").val().trim().split(",");
-        for (i = 0; i < 8; i++)
-          $("#" + settingslist[i]).val(settings[i]);
-        for (i = 8; i < 11; i++)
-          $("#" + settingslist[i]).prop("checked", settings[i]);
       }
+
       restart();
     }
   </script>
@@ -142,8 +160,16 @@
   <div class="center_outer nav open">
     <!--nav-->
     <div class="center_inner quarter left" style="background-color: #111111; opacity: 0.8; min-width:300px">
-      <h1 class="Headline">Find beauty in dots</h1>
-      <div id="setting-table" class="inline">
+      <h1 class="Headline">Find your style.</h1>
+      <p class="big_font">
+        Settings
+      </p>
+      <div id="setting-table" class="spoiler inline three-fourth">
+      </div>
+      <p class="big_font">
+        Presets
+      </p>
+      <div id="preset-div" class="spoiler three-fourth">
       </div>
     </div>
     <div class="nav-outside three-fourth right" onclick='$(".nav-icon, .nav").toggleClass("open");'>
@@ -194,7 +220,6 @@
         this.y += this.vy;
       };
     };
-
 
     var mesh = function(n, d, t, l) {
       this.n = n; //ilość obiektów
@@ -247,10 +272,6 @@
     }
 
     function restart() {
-      if ($("#dot-symetry").prop("checked")) {
-        $("#dot-center").prop("checked", true);
-        $("#dot-constant").prop("checked", false);
-      }
       M.delete;
       cancelAnimationFrame(ttt);
       M = new mesh(settings[1], settings[2] * 2, settings[3] / 100, settings[0]);

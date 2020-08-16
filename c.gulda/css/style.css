@@ -51,6 +51,25 @@ canvas {
   z-index: 1;
 }
 
+.spoiler{
+  height: 20px;
+  border: 1px solid white;
+}
+
+.spoiler * {
+  transform: scale(0, 1);
+}
+
+.spoiler:hover {
+  height: auto;
+  width: auto;
+  border:none;
+}
+
+.spoiler:hover * {
+  transform: scale(1, 1);
+}
+
 /*----------positioning-------------*/
 .ceter, .three-fourth, .two-third, .half, .third, .quarter, .left, .right, .top, .bottom {
   margin: auto;
@@ -196,7 +215,7 @@ canvas {
 }
 
 /*----------buttons-------------*/
-.navigation_button {
+.navigation_button, .choose_button {
   font-family: monospace;
   font-size: 1.2em;
   margin: auto;
@@ -204,12 +223,12 @@ canvas {
   font-weight: lighter;
 }
 
-.navigation_button>.special {
+.navigation_button>.special, .choose_button>.special {
   font-weight: bold;
   border: 0.5px solid yellow;
 }
 
-.navigation_button a {
+.navigation_button a, .choose_button a {
   display: inline-block;
   letter-spacing: 2px;
   margin: 20px;
@@ -224,14 +243,20 @@ canvas {
   cursor: pointer;
 }
 
-.navigation_button>a:hover {
+.navigation_button>a:hover, .choose_button>a:hover {
   background: rgba(0, 75, 255, 0.15);
   box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.5);
 }
 
-.navigation_button>a:active {
+.navigation_button>a:active, .choose_button>a:active {
   background: rgba(0, 75, 255, 0.35);
   box-shadow: 0 0 20px 2px;
+}
+
+
+.choose_button a {
+  margin: 10px;
+  padding: 5px;
 }
 
 /*----------inputs-------------*/
