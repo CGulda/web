@@ -129,6 +129,10 @@ canvas {
   font-size: 1.2em;
 }
 
+.hide{
+  display: none;
+}
+
 /*----------menu-------------*/
 .select>div {
   display: inline-block;

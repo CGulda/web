@@ -1,52 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 
 <head>
-  <title>Playground Table</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <style>
-    table {
-      border: 1px solid grey;
-    }
-  </style>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Mesh - by CGulda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+  <link
+    href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAueP6ADJCXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiIgAAAAAAAiIiIAAAAAACERIgAAAAACIiIiIAAAAAIiIiIgAAAAAhEREiIAAAABERERIgAAAAERERESAAAAAREREREAAAABERESIgAAACIiIiIiAAAAIiIiIiIAAAACIiIiIAAAAAAiIiIAAAAAAAIgAAAAD//wAA/D8AAPgfAAD4HwAA8A8AAPAPAADwBwAA8AcAAPAHAADwBwAA8AcAAOAHAADgBwAA8A8AAPgfAAD8/wAA"
+    rel="icon" type="image/x-icon" />
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  <script src="core.js"></script>
   <script>
     $(document).ready(function() {
-      var content_for_table = [
-      ["dot-size",1,"",""],
-      ["dot-number",100,"",""],
-      ["dot-range",100,"touch range",""]];
-      //[id,value,label,other]
 
-      var table_content = [];
-      for (i=0;i<content_for_table.length;i++){
-        let one_row = (content_for_table[i][2]=="") ? [content_for_table[i][0].replace("-"," ")] : [content_for_table[i][2]];
-        one_row.push('<input type="range" id="' + content_for_table[i][0] + '" value="' + content_for_table[i][1] + '" />')
-        table_content.push(one_row);
+      if ($(window).height() > $(window).width()) {
+        $(".photo").toggleClass("rotate")
       }
-        // "dot-number", "dot-range", "dot-timeout", "dot-color", "dot-colrange", "dot-colintens", "dot-speed"];
-
-      var table_body = '<table>';
-      for (var i = 0; i < table_content.length; i++) {
-        table_body += '<tr>';
-        for (var j = 0; j < table_content[0].length; j++) {
-          table_body += '<td>';
-          table_body += table_content[i][j];
-          table_body += '</td>';
-        }
-        table_body += '</tr>';
-      }
-      table_body += '</table>';
-      $('#setting-table').html(table_body);
-
-
     });
+
+    function zdjęcie(n) {
+      var str = $("#pbi_photo").attr("src");
+      str = str.substr(0, str.length - 4);
+      let temp = str.substr(str.search("_") + 1);
+      temp = parseInt(temp) + parseInt(n);
+      if (temp < 0) {
+        temp = 11
+      } else if (temp > 11) {
+        temp = 0
+      }
+      str = str.substr(0, str.search("_") + 1) + temp + ".png";
+      //if (ImageExist("file:///E:/JaNie/GIT/web/c.gulda/" + str)){
+      $("#pbi_photo").attr("src", str);
+      //}else{zdjęcie(-100);}
+    }
+
+    function ImageExist(url) {
+      var img = new Image();
+      img.src = url;
+      return img.height != 0;
+    }
   </script>
 </head>
 
 <body>
-  <div id="setting-table" style="margin-top: 40px">
-    Table will gentare here.
+  <div class="canvas-protection">
+    <!--
+                <div class="nav-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="nav">
+                  <div class="nav-inside">
+                  </div>
+                  <div class="nav-outside">
+                  </div>
+                </div>-->
+    <div id="Home" class="center_outer">
+      <div class="center_inner">
+
+        <div class="Headline">
+          <h1>AREAS</h1>
+        </div>
+        <div class="select">
+          <div>
+            <a href="index.html#pbi"><img style="background-color: #F2C80F;" src="https://img.icons8.com/all/500/power-bi.png"></a>
+            <span>Power BI</span>
+          </div>
+          <div>
+            <a href="index.html#js"><img style="background-color: #F2C80F;" src="https://cdn.iconscout.com/icon/free/png-512/javascript-2038874-1720087.png"></a>
+            <span>Web projects</span>
+          </div>
+          <div>
+            <a href="index.html#other"><img style="background-color: #F2C80F;" src="https://cdn.pixabay.com/photo/2018/03/31/16/21/pixel-3278512_1280.png"></a>
+            <span>Other stuff</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="pbi" class="panel">
+      <div class="Headline">
+        <h1 style="color: #F2C80F;">Power BI</h1>
+      </div>
+      <div class="photo">
+        <div onclick="zdjęcie(-1);" class="previous-photo">
+          <p>
+            << /p>
+        </div>
+        <div onclick="zdjęcie(1);" class="next-photo">
+          <p>></p>
+        </div>
+        <div class="center_inner"><img id="pbi_photo" src="pbi/pbi_0.png" info="0"></div>
+      </div>
+    </div>
+    <div id="js" class="center_outer">
+      <div class="center_inner">
+        <div class="Headline">
+          <h1 style="color: #F2C80F;">Simlpe web projects</h1>
+        </div>
+
+        <div class="navigation_button" style="width: 50%;">
+          <a href="games/pathfinder.html" class="special">Pathfinder</a>
+          <a href="games/snake.html" class="special">SNAKE</a>
+          <a href="games/snake2.html" class="special">SNAKE - automove</a>
+          </br>
+          <a href="games/svgdraw.html">Dotter</a>
+          <a href="games/coordinates.html">Coordinates</a>
+          </br>
+          <a href="games/loader.html">Loader</a>
+          <a href="games/clicker.html">Clicker</a>
+          <a href="games/work.html">Work simulator</a>
+          <a href="projects/index.html">Short projects</a>
+
+        </div>
+      </div>
+    </div>
+    <div id="other" class="center_outer">
+      <div class="center_inner">
+        <div class="Headline">
+          <h1 style="color: #F2C80F;">Mesh visualization</h1>
+        </div>
+
+        <div id="preset-div" class="navigation_button" style="width: 50%;">
+        </div>
+                <div class="navigation_button" style="width: 50%;">
+                  <a href="mesh.html" class="special">MUCH, MUCH MORE!</a>
+                  <input class="hide" type="text" id="dot-seed" value="1, 150, 75, 70, 90, 15, 100, 1, false, false, false">
+                </div>
+      </div>
+    </div>
+    <a href="#" class="go-top">Go Top</a>
+
   </div>
+
+  <script src="mesh.js"></script>
+
 </body>
 
 </html>
