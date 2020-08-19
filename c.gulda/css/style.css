@@ -52,18 +52,21 @@ canvas {
 }
 
 .spoiler{
-  height: 20px;
+  height: 40px;
   border: 1px solid white;
 }
 
 .spoiler * {
-  transform: scale(0, 1);
+  transform: scale(1, 0);
 }
 
 .spoiler:hover {
+  border: 1px solid black;
   height: auto;
   width: auto;
-  border:none;
+  border: none;
+  margin: auto;
+  padding: 10% 10% 10% 10%;
 }
 
 .spoiler:hover * {
@@ -162,6 +165,7 @@ canvas {
   font-family: 'Major Mono Display', monospace;
   margin: 3% 9% 3% 9%;
   font-size: 2em;
+  color: #F2C80F;
 }
 
 .rotate {
