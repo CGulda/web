@@ -12,32 +12,33 @@
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <script src="core.js"></script>
 </head>
+
 <body>
 
-<div class="nav-icon open">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
-<div class="center_outer nav open">
-  <!--nav-->
-  <div class="center_inner quarter left" style="background-color: #111111; opacity: 0.8; min-width:300px">
-    <h1 class="Headline">Find your style.</h1>
-    <p class="big_font">
-      Settings
-    </p>
-    <div id="setting-table" class="spoiler inline three-fourth">
+  <div class="nav-icon open">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="center_outer nav open">
+    <!--nav-->
+    <div class="center_inner quarter left" style="background-color: #111111; opacity: 0.8; min-width:300px">
+      <h1 class="Headline">Find your style.</h1>
+      <p class="big_font">
+        Settings
+      </p>
+      <div id="setting-table" class="spoiler inline three-fourth">
+      </div>
+      <p class="big_font">
+        Presets
+      </p>
+      <div id="preset-div" class="spoiler three-fourth">
+      </div>
     </div>
-    <p class="big_font">
-      Presets
-    </p>
-    <div id="preset-div" class="spoiler three-fourth">
+    <div class="nav-outside three-fourth right" onclick='$(".nav-icon, .nav").toggleClass("open");'>
     </div>
   </div>
-  <div class="nav-outside three-fourth right" onclick='$(".nav-icon, .nav").toggleClass("open");'>
-  </div>
-</div>
-<script src="mesh.js"></script>
+  <script src="mesh.js"></script>
 </body>
 
 </html>

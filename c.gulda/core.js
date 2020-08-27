@@ -22,13 +22,19 @@ $(document).ready(function() {
     }, 300);
   })
 
+  $(window).resize(function() {
+    if (window.innerHeight > window.innerWidth) {
+      //$(".photo").toggleClass("rotate")
+    }
+  });
+
 });
 
 function GetRandom(number) {
-  if($.isNumeric(number)){
-  return Math.floor(Math.random() * number);
-}else if(number == "true"){
-  let temp = (GetRandom(10)>5)? "true": "false";
-  return temp;
-}
+  if ($.isNumeric(number)) {
+    return Math.floor(Math.random() * number);
+  } else if (number == "true") {
+    let temp = (GetRandom(10) > 5) ? "true" : "false";
+    return temp;
+  }
 }

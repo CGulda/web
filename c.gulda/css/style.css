@@ -51,9 +51,9 @@ canvas {
   z-index: 1;
 }
 
-.spoiler{
+.spoiler {
   height: 40px;
-  border: 1px solid white;
+  outline: 1px solid white;
 }
 
 .spoiler * {
@@ -64,7 +64,6 @@ canvas {
   border: 1px solid black;
   height: auto;
   width: auto;
-  border: none;
   margin: auto;
   padding: 10% 10% 10% 10%;
 }
@@ -129,7 +128,7 @@ canvas {
   font-size: 1.2em;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
@@ -147,8 +146,10 @@ canvas {
 }
 
 .select>div, .select img {
-  width: 10vmax;
-  height: 10vmax;
+  width: 5vmax;
+  height: 5vmax;
+  min-width: 100px;
+  min-height: 100px;
 }
 
 .select>div:hover {
@@ -158,7 +159,6 @@ canvas {
 .select>div>span {
   display: block;
   visibility: hidden;
-  font-size: 2em;
 }
 
 .select>div:hover>span {
@@ -168,58 +168,65 @@ canvas {
 .Headline {
   font-family: 'Major Mono Display', monospace;
   margin: 3% 9% 3% 9%;
-  font-size: 2em;
+  font-size: 1.5em;
   color: #F2C80F;
 }
 
 .rotate {
-  transition: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 /*----------carusel-------------*/
 .photo {
   display: table;
-  width: 100%;
-  height: 60vw;
+  max-width: 100%;
+  height: auto;
   max-height: 900px;
   background-color: black;
   margin: 0;
   overflow: hidden;
+  -moz-transition: transform 1s;
+  -webkit-transition: transform 1s;
+  transition: transform 1s;
 }
 
-.photo img {
-  margin: auto;
-  max-height: 100%;
+.photo-carusel {
+  display: table-cell;
+  height: 80vh;
   width: 100%;
-  max-width: 1600px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.photo-caption {
+  display: table-cell;
+  text-align: left;
+  vertical-align: top;
+  padding-right: 50px;
+  background: black;
+  height: 100%;
+  min-width: 300px;
+  font-size: 1.4em;
 }
 
 .previous-photo, .next-photo {
-  display: table;
-  position: absolute;
-  opacity: 0.1;
-  height: inherit;
-  width: 10%;
-  background-color: black;
+  height: 100%;
+  width: 49%;
+  margin: 0;
+  display: inline-block;
+  position: relative;
+  opacity: 0.01;
   cursor: pointer;
-}
-
-.previous-photo>p, .next-photo>p {
-  display: table-cell;
-  vertical-align: middle;
   font-size: 5em;
+  z-index: 3;
+  background: black;
+  text-align: center;
+  vertical-align: bottom;
 }
 
 .previous-photo:hover, .next-photo:hover {
-  opacity: 0.6;
-}
-
-.previous-photo {
-  left: 0;
-}
-
-.next-photo {
-  right: 0;
+  opacity: 0.1;
 }
 
 /*----------buttons-------------*/
@@ -233,18 +240,18 @@ canvas {
 
 .navigation_button>.special, .choose_button>.special {
   font-weight: bold;
-  border: 0.5px solid yellow;
+  border: 0.1px solid yellow;
 }
 
 .navigation_button a, .choose_button a {
   display: inline-block;
   letter-spacing: 2px;
-  margin: 20px;
+  margin: 10px;
   text-decoration: none;
   background-color: black;
-  border: 0.5px solid white;
+  border: 0.1px solid white;
   border-radius: 7px;
-  padding: 25px;
+  padding: 15px;
   font-size: 1.2em;
   color: inherit;
   transition: 0.5s;
@@ -260,7 +267,6 @@ canvas {
   background: rgba(0, 75, 255, 0.35);
   box-shadow: 0 0 20px 2px;
 }
-
 
 .choose_button a {
   margin: 10px;

@@ -11,35 +11,15 @@
     rel="icon" type="image/x-icon" />
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
   <script src="core.js"></script>
+  <script src="pbi\images.js"></script>
   <script>
     $(document).ready(function() {
-
-      if ($(window).height() > $(window).width()) {
+      zdjęcie(0);
+      if (window.innerHeight > window.innerWidth) {
         $(".photo").toggleClass("rotate")
       }
     });
 
-    function zdjęcie(n) {
-      var str = $("#pbi_photo").attr("src");
-      str = str.substr(0, str.length - 4);
-      let temp = str.substr(str.search("_") + 1);
-      temp = parseInt(temp) + parseInt(n);
-      if (temp < 0) {
-        temp = 11
-      } else if (temp > 11) {
-        temp = 0
-      }
-      str = str.substr(0, str.search("_") + 1) + temp + ".png";
-      //if (ImageExist("file:///E:/JaNie/GIT/web/c.gulda/" + str)){
-      $("#pbi_photo").attr("src", str);
-      //}else{zdjęcie(-100);}
-    }
-
-    function ImageExist(url) {
-      var img = new Image();
-      img.src = url;
-      return img.height != 0;
-    }
   </script>
 </head>
 
@@ -84,57 +64,55 @@
         <h1 style="color: #F2C80F;">Power BI</h1>
       </div>
       <div class="photo">
-        <div onclick="zdjęcie(-1);" class="previous-photo">
-          <p>
-            << /p>
-        </div>
-        <div onclick="zdjęcie(1);" class="next-photo">
-          <p>></p>
-        </div>
-        <div class="center_inner"><img id="pbi_photo" src="pbi/pbi_0.png" info="0"></div>
-      </div>
-    </div>
-    <div id="js" class="center_outer">
-      <div class="center_inner">
-        <div class="Headline">
-          <h1 style="color: #F2C80F;">Simlpe web projects</h1>
-        </div>
-
-        <div class="navigation_button" style="width: 50%;">
-          <a href="games/pathfinder.html" class="special">Pathfinder</a>
-          <a href="games/snake.html" class="special">SNAKE</a>
-          <a href="games/snake2.html" class="special">SNAKE - automove</a>
-          </br>
-          <a href="games/svgdraw.html">Dotter</a>
-          <a href="games/coordinates.html">Coordinates</a>
-          </br>
-          <a href="games/loader.html">Loader</a>
-          <a href="games/clicker.html">Clicker</a>
-          <a href="games/work.html">Work simulator</a>
-          <a href="projects/index.html">Short projects</a>
-
+        <div class="photo-carusel" id="pbi_photo">
+          <div onclick="zdjęcie(-1);" class="previous-photo"></div>
+              <div onclick="zdjęcie(1);" class="next-photo"></div>
+          </div>
+          <div class="photo-caption">
+          </div>
         </div>
       </div>
-    </div>
-    <div id="other" class="center_outer">
-      <div class="center_inner">
-        <div class="Headline">
-          <h1 style="color: #F2C80F;">Mesh visualization</h1>
-        </div>
+      <div id="js" class="center_outer">
+        <div class="center_inner">
+          <div class="Headline">
+            <h1 style="color: #F2C80F;">Simlpe web projects</h1>
+          </div>
 
-        <div id="preset-div" class="navigation_button" style="width: 50%;">
+          <div class="navigation_button" style="width: 50%;">
+            <a href="games/pathfinder.html" class="special">Pathfinder</a>
+            <a href="games/snake.html" class="special">SNAKE</a>
+            <a href="games/snake2.html" class="special">SNAKE - automove</a>
+            </br>
+            <a href="games/svgdraw.html">Dotter</a>
+            <a href="games/coordinates.html">Coordinates</a>
+            </br>
+            <a href="games/loader.html">Loader</a>
+            <a href="games/clicker.html">Clicker</a>
+            <a href="games/work.html">Work simulator</a>
+            <a href="projects/index.html">Short projects</a>
+
+          </div>
         </div>
-                <div class="navigation_button" style="width: 50%;">
-                  <a href="mesh.html" class="special">MUCH, MUCH MORE!</a>
-                  <input class="hide" type="text" id="dot-seed" value="1, 150, 75, 70, 90, 15, 100, 1, false, false, false">
-                </div>
       </div>
+      <div id="other" class="center_outer">
+        <div class="center_inner">
+          <div class="Headline">
+            <h1 style="color: #F2C80F;">Mesh visualization</h1>
+          </div>
+
+          <div id="preset-div" class="navigation_button" style="width: 50%;">
+          </div>
+          <div class="navigation_button" style="width: 50%;">
+            <a href="mesh.html" class="special">MUCH, MUCH MORE!</a>
+            <input class="hide" type="text" id="dot-seed" value="1, 150, 75, 70, 90, 15, 100, 1, false, false, false">
+          </div>
+        </div>
+      </div>
+      <a href="#" class="go-top">Go Top</a>
+
     </div>
-    <a href="#" class="go-top">Go Top</a>
 
-  </div>
-
-  <script src="mesh.js"></script>
+    <script src="mesh.js"></script>
 
 </body>
 
