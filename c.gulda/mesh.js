@@ -1,16 +1,16 @@
 var settingslist = ["dot-size", "dot-number", "dot-range", "dot-timeout",
   "dot-color", "dot-colrange", "dot-colintens", "dot-speed", "dot-center", "dot-symetry", "dot-constant", "dot-seed"
 ];
-var settings = [1, 150, 75, 70, 90, 15, 100, 1, false, false, false];
+var settings = [1, 150, 10, 70, 90, 15, 100, 1, false, false, false];
 let presets = [
   ["Random"],
-  ["Default", [1, 150, 75, 70, 90, 15, 100, 1, false, false, false]],
-  ["Purple", [1, 9, 213, 2, 98, 0, 56, 20, false, false, false]],
-  ["Star", [1, 38, 300, 8, 0, 0, 100, 5, true, false, true]],
-  ["Constelations", [0, 70, 27, 32, 211, 345, 89, 1, false, false, false]],
-  ["Weeb", [0, 83, 195, 50, 155, 313, 55, 5, true, true, false]],
-  ["Plankton", [1, 83, 66, 49, 275, 116, 63, 1, false, false, false]],
-  ["Sun", [0, 101, 464, 14, 41, 0, 53, 2, true, false, false]],
+  ["Default", [1, 150, 10, 70, 90, 15, 100, 1, false, false, false]],
+  ["Purple", [1, 9, 60, 2, 98, 0, 56, 20, false, false, false]],
+  ["Star", [1, 38, 100, 8, 0, 0, 100, 5, true, false, true]],
+  ["Constelations", [0, 70, 15, 32, 211, 345, 89, 1, false, false, false]],
+  ["Weeb", [0, 83, 30, 50, 155, 313, 55, 5, true, true, false]],
+  ["Plankton", [1, 83, 10, 49, 275, 116, 63, 1, false, false, false]],
+  ["Sun", [0, 101, 75, 14, 41, 0, 53, 2, true, false, false]],
   ["firework", [2, 80, 0, 7, 313, 22, 62, 5, true, false, false]]
 ];
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
   var content_for_table = [
     ["dot-size", 1, "", "range", [0, 5]],
     ["dot-number", 100, "", "range", [5, 250]],
-    ["dot-range", 100, "touch range", "range", [0, (window.innerWidth > window.innerHeight) ? window.innerWidth / 8 : window.innerHeight / 8]],
+    ["dot-range", 100, "touch range", "range", [0, 75]],
     ["dot-timeout", 30, "", "range", [1, 50]],
     ["dot-color", 100, "", "range", [0, 360]],
     ["dot-colrange", 100, "color diversity", "range", [0, 360]],
@@ -75,7 +75,11 @@ $(document).ready(function() {
   doer();
   //Trigger(1);
 
-  $(window).resize(function() {
+  $(window).on('resize', function() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    c.width = W;
+    c.height = H;
     restart();
   });
 
@@ -88,7 +92,7 @@ $(document).ready(function() {
     let ind = $(this).attr("value");
     let temp = [];
     if (ind == 0) {
-      temp = [GetRandom(2), GetRandom(100) + 10, GetRandom(100) + 10, GetRandom(75), GetRandom(360), GetRandom(360), GetRandom(50) + 50, GetRandom(9) + 1, GetRandom("true"), GetRandom("true"), GetRandom("true")];
+      temp = [GetRandom(2), GetRandom(100) + 10, GetRandom(50) , GetRandom(75), GetRandom(360), GetRandom(360), GetRandom(50) + 50, GetRandom(9) + 1, GetRandom("true"), GetRandom("true"), GetRandom("true")];
     } else {
       temp = presets[ind][1];
     }
@@ -140,7 +144,6 @@ W = window.innerWidth;
 H = window.innerHeight;
 var c = document.createElement('canvas'),
   ctx = c.getContext('2d');
-//document.body.appendChild(c);
 document.body.insertBefore(c, document.body.firstChild);
 c.width = W;
 c.height = H;
@@ -184,7 +187,7 @@ var point = function(x, y) {
 var mesh = function() {
   l = settings[0]; //grubość obiektu
   n = settings[1] * 2; //ilość obiektów
-  d = settings[2]; //zasięg obiektu
+  d = (settings[2]/256)* Math.sqrt(Math.pow(window.innerWidth,2) + Math.pow(window.innerHeight,2)); //zasięg obiektu
   t = settings[3] / 100; //czas życia obiektu
   this.l = l;
   this.n = n;
