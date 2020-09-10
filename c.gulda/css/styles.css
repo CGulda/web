@@ -1,0 +1,139 @@
+body {
+  font-family: "Montserrat";
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat";
+  font-weight: 700;
+}
+
+p {
+  color: #8f8f8f;
+}
+
+/* Navigation Bar */
+.navbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0 15%;
+}
+
+.navbar-brand {
+  font-family: 'Montaga', serif;
+  font-size: 2.5rem;
+  color: #00adb5;
+}
+
+.nav-item {
+  padding: 0 18px;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  font-family: "Montserrat";
+  font-weight: 300;
+}
+
+/* Headings */
+.big-heading {
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+/* Containers */
+.container-fluid {
+  padding: 7% 15%;
+}
+
+/* Sections */
+.colored-section {
+  background-color: #222831;
+  color: #fff;
+}
+
+.white-section {
+  background-color: #eeeeee;
+}
+
+/* Buttons */
+.download-button {
+  margin: 5% 3% 5% 0;
+}
+
+/* Title Section */
+#title {
+  text-align: left;
+}
+
+#title .container-fluid {
+  padding: 3% 15% 7%;
+}
+
+.title-image {
+  width: 100%;
+}
+
+/* Features Section */
+.feature-title {
+  font-size: 1.5rem;
+}
+
+.icon {
+  color: #00adb5;
+  margin-bottom: 1rem;
+}
+
+.icon:hover {
+  color: #4e89ae;
+}
+
+/* Testimonial Section */
+.testimonial-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.testimonial-image {
+  width: 10%;
+  border-radius: 100%;
+  margin: 20px;
+}
+
+/* Skills Section */
+#skills {
+  padding: 100px;
+}
+
+.card-text {
+  font-size: 2rem;
+  line-height: 1.5;
+}
+
+.card-column {
+  padding: 3% 2% 2%;
+}
+
+@media (max-width: 1028px) {
+
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+  #title {
+    text-align: center;
+  }
+
+  .feature-box {
+    padding: 2% 0;
+  }
+}
